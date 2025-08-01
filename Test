@@ -1291,8 +1291,8 @@ Section4:Toggle({
 	end,
 })
 
-local Section5 = Tab_1:Section({Title = 'Player', Side = 'Left'})
-local Section6 = Tab_1:Section({Title = 'Misc', Side = 'Right'})
+local Section5 = Tab:Section({Title = 'Player', Side = 'Left'})
+local Section6 = Tab:Section({Title = 'Misc', Side = 'Right'})
 
 Section5:Slider({
 	Title = 'Walk Speed',
@@ -1300,7 +1300,7 @@ Section5:Slider({
 	Max = 300,
 	Value = 10,
 	Callback = function(s)
-		Player.Character.HumanoidWalkSpeed = s
+		Player.Character.Humanoid.WalkSpeed = s
 	end,
 })
 
@@ -1310,7 +1310,7 @@ Section5:Slider({
 	Max = 100,
 	Value = 30,
 	Callback = function(s)
-		Player.Character.HumanoidJumpPower = s
+		Player.Character.Humanoid.JumpPower = s
 	end,
 })
 
@@ -1333,7 +1333,7 @@ Section6:Dropdown({
 Section6:Button({
     Title = 'Refrash Player List',
     Callback = function()
-        table.Clear(PlayerList, v.Name)
+        table.clear(PlayerList, v.Name)
         table.insert(PlayerList, v.Name)
     end,
 })
@@ -1344,12 +1344,6 @@ Section6:Button({
         Player.Character.HumanoidRootPart.CFrame = Players[getgenv().SelectPlayer].Character.HumanoidRootPart.CFrame
     end,
 })
-
-
-
-
-
-
 
 
 
