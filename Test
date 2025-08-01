@@ -1,1192 +1,558 @@
-local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/wowsecret4869/justUIing/refs/heads/main/UI.js'))()
+-------------------------------------- FUNCTION CODE WEB KEY --------------------------------------
+local a=2^32;local b=a-1;local function c(d,e)local f,g=0,1;while d~=0 or e~=0 do local h,i=d%2,e%2;local j=(h+i)%2;f=f+j*g;d=math.floor(d/2)e=math.floor(e/2)g=g*2 end;return f%a end;local function k(d,e,l,...)local m;if e then d=d%a;e=e%a;m=c(d,e)if l then m=k(m,l,...)end;return m elseif d then return d%a else return 0 end end;local function n(d,e,l,...)local m;if e then d=d%a;e=e%a;m=(d+e-c(d,e))/2;if l then m=n(m,l,...)end;return m elseif d then return d%a else return b end end;local function o(p)return b-p end;local function q(d,r)if r<0 then return lshift(d,-r)end;return math.floor(d%2^32/2^r)end;local function s(p,r)if r>31 or r<-31 then return 0 end;return q(p%a,r)end;local function lshift(d,r)if r<0 then return s(d,-r)end;return d*2^r%2^32 end;local function t(p,r)p=p%a;r=r%32;local u=n(p,2^r-1)return s(p,r)+lshift(u,32-r)end;local v={0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2}local function w(x)return string.gsub(x,".",function(l)return string.format("%02x",string.byte(l))end)end;local function y(z,A)local x=""for B=1,A do local C=z%256;x=string.char(C)..x;z=(z-C)/256 end;return x end;local function D(x,B)local A=0;for B=B,B+3 do A=A*256+string.byte(x,B)end;return A end;local function E(F,G)local H=64-(G+9)%64;G=y(8*G,8)F=F.."\128"..string.rep("\0",H)..G;assert(#F%64==0)return F end;local function I(J)J[1]=0x6a09e667;J[2]=0xbb67ae85;J[3]=0x3c6ef372;J[4]=0xa54ff53a;J[5]=0x510e527f;J[6]=0x9b05688c;J[7]=0x1f83d9ab;J[8]=0x5be0cd19;return J end;local function K(F,B,J)local L={}for M=1,16 do L[M]=D(F,B+(M-1)*4)end;for M=17,64 do local N=L[M-15]local O=k(t(N,7),t(N,18),s(N,3))N=L[M-2]L[M]=(L[M-16]+O+L[M-7]+k(t(N,17),t(N,19),s(N,10)))%a end;local d,e,l,P,Q,R,S,T=J[1],J[2],J[3],J[4],J[5],J[6],J[7],J[8]for B=1,64 do local O=k(t(d,2),t(d,13),t(d,22))local U=k(n(d,e),n(d,l),n(e,l))local V=(O+U)%a;local W=k(t(Q,6),t(Q,11),t(Q,25))local X=k(n(Q,R),n(o(Q),S))local Y=(T+W+X+v[B]+L[B])%a;T=S;S=R;R=Q;Q=(P+Y)%a;P=l;l=e;e=d;d=(Y+V)%a end;J[1]=(J[1]+d)%a;J[2]=(J[2]+e)%a;J[3]=(J[3]+l)%a;J[4]=(J[4]+P)%a;J[5]=(J[5]+Q)%a;J[6]=(J[6]+R)%a;J[7]=(J[7]+S)%a;J[8]=(J[8]+T)%a end;local function Z(F)F=E(F,#F)local J=I({})for B=1,#F,64 do K(F,B,J)end;return w(y(J[1],4)..y(J[2],4)..y(J[3],4)..y(J[4],4)..y(J[5],4)..y(J[6],4)..y(J[7],4)..y(J[8],4))end;local e;local l={["\\"]="\\",["\""]="\"",["\b"]="b",["\f"]="f",["\n"]="n",["\r"]="r",["\t"]="t"}local P={["/"]="/"}for Q,R in pairs(l)do P[R]=Q end;local S=function(T)return"\\"..(l[T]or string.format("u%04x",T:byte()))end;local B=function(M)return"null"end;local v=function(M,z)local _={}z=z or{}if z[M]then error("circular reference")end;z[M]=true;if rawget(M,1)~=nil or next(M)==nil then local A=0;for Q in pairs(M)do if type(Q)~="number"then error("invalid table: mixed or invalid key types")end;A=A+1 end;if A~=#M then error("invalid table: sparse array")end;for a0,R in ipairs(M)do table.insert(_,e(R,z))end;z[M]=nil;return"["..table.concat(_,",").."]"else for Q,R in pairs(M)do if type(Q)~="string"then error("invalid table: mixed or invalid key types")end;table.insert(_,e(Q,z)..":"..e(R,z))end;z[M]=nil;return"{"..table.concat(_,",").."}"end end;local g=function(M)return'"'..M:gsub('[%z\1-\31\\"]',S)..'"'end;local a1=function(M)if M~=M or M<=-math.huge or M>=math.huge then error("unexpected number value '"..tostring(M).."'")end;return string.format("%.14g",M)end;local j={["nil"]=B,["table"]=v,["string"]=g,["number"]=a1,["boolean"]=tostring}e=function(M,z)local x=type(M)local a2=j[x]if a2 then return a2(M,z)end;error("unexpected type '"..x.."'")end;local a3=function(M)return e(M)end;local a4;local N=function(...)local _={}for a0=1,select("#",...)do _[select(a0,...)]=true end;return _ end;local L=N(" ","\t","\r","\n")local p=N(" ","\t","\r","\n","]","}",",")local a5=N("\\","/",'"',"b","f","n","r","t","u")local m=N("true","false","null")local a6={["true"]=true,["false"]=false,["null"]=nil}local a7=function(a8,a9,aa,ab)for a0=a9,#a8 do if aa[a8:sub(a0,a0)]~=ab then return a0 end end;return#a8+1 end;local ac=function(a8,a9,J)local ad=1;local ae=1;for a0=1,a9-1 do ae=ae+1;if a8:sub(a0,a0)=="\n"then ad=ad+1;ae=1 end end;error(string.format("%s at line %d col %d",J,ad,ae))end;local af=function(A)local a2=math.floor;if A<=0x7f then return string.char(A)elseif A<=0x7ff then return string.char(a2(A/64)+192,A%64+128)elseif A<=0xffff then return string.char(a2(A/4096)+224,a2(A%4096/64)+128,A%64+128)elseif A<=0x10ffff then return string.char(a2(A/262144)+240,a2(A%262144/4096)+128,a2(A%4096/64)+128,A%64+128)end;error(string.format("invalid unicode codepoint '%x'",A))end;local ag=function(ah)local ai=tonumber(ah:sub(1,4),16)local aj=tonumber(ah:sub(7,10),16)if aj then return af((ai-0xd800)*0x400+aj-0xdc00+0x10000)else return af(ai)end end;local ak=function(a8,a0)local _=""local al=a0+1;local Q=al;while al<=#a8 do local am=a8:byte(al)if am<32 then ac(a8,al,"control character in string")elseif am==92 then _=_..a8:sub(Q,al-1)al=al+1;local T=a8:sub(al,al)if T=="u"then local an=a8:match("^[dD][89aAbB]%x%x\\u%x%x%x%x",al+1)or a8:match("^%x%x%x%x",al+1)or ac(a8,al-1,"invalid unicode escape in string")_=_..ag(an)al=al+#an else if not a5[T]then ac(a8,al-1,"invalid escape char '"..T.."' in string")end;_=_..P[T]end;Q=al+1 elseif am==34 then _=_..a8:sub(Q,al-1)return _,al+1 end;al=al+1 end;ac(a8,a0,"expected closing quote for string")end;local ao=function(a8,a0)local am=a7(a8,a0,p)local ah=a8:sub(a0,am-1)local A=tonumber(ah)if not A then ac(a8,a0,"invalid number '"..ah.."'")end;return A,am end;local ap=function(a8,a0)local am=a7(a8,a0,p)local aq=a8:sub(a0,am-1)if not m[aq]then ac(a8,a0,"invalid literal '"..aq.."'")end;return a6[aq],am end;local ar=function(a8,a0)local _={}local A=1;a0=a0+1;while 1 do local am;a0=a7(a8,a0,L,true)if a8:sub(a0,a0)=="]"then a0=a0+1;break end;am,a0=a4(a8,a0)_[A]=am;A=A+1;a0=a7(a8,a0,L,true)local as=a8:sub(a0,a0)a0=a0+1;if as=="]"then break end;if as~=","then ac(a8,a0,"expected ']' or ','")end end;return _,a0 end;local at=function(a8,a0)local _={}a0=a0+1;while 1 do local au,M;a0=a7(a8,a0,L,true)if a8:sub(a0,a0)=="}"then a0=a0+1;break end;if a8:sub(a0,a0)~='"'then ac(a8,a0,"expected string for key")end;au,a0=a4(a8,a0)a0=a7(a8,a0,L,true)if a8:sub(a0,a0)~=":"then ac(a8,a0,"expected ':' after key")end;a0=a7(a8,a0+1,L,true)M,a0=a4(a8,a0)_[au]=M;a0=a7(a8,a0,L,true)local as=a8:sub(a0,a0)a0=a0+1;if as=="}"then break end;if as~=","then ac(a8,a0,"expected '}' or ','")end end;return _,a0 end;local av={['"']=ak,["0"]=ao,["1"]=ao,["2"]=ao,["3"]=ao,["4"]=ao,["5"]=ao,["6"]=ao,["7"]=ao,["8"]=ao,["9"]=ao,["-"]=ao,["t"]=ap,["f"]=ap,["n"]=ap,["["]=ar,["{"]=at}a4=function(a8,a9)local as=a8:sub(a9,a9)local a2=av[as]if a2 then return a2(a8,a9)end;ac(a8,a9,"unexpected character '"..as.."'")end;local aw=function(a8)if type(a8)~="string"then error("expected argument of type string, got "..type(a8))end;local _,a9=a4(a8,a7(a8,1,L,true))a9=a7(a8,a9,L,true)if a9<=#a8 then ac(a8,a9,"trailing garbage")end;return _ end;
+local lEncode, lDecode, lDigest = a3, aw, Z;
 
-local Window = library:Window({
-    Logo = 122504813117904,
-    Keybind = Enum.KeyCode.LeftControl,
-    Size = UDim2.new(0, 600,1.0, 0)
-})
-local Tab = Window:Tab({Title = 'Main'})
-local Tab_1 = Window:Tab({Title = 'Local Player'})
+local service = 1073; 
+local secret = "0957957b-c7d8-45a8-82ef-8e0d7dd69391"; 
+local useNonce = true; 
+local onMessage = function(message) end;
 
-local ContextActionService = cloneref(game:GetService('ContextActionService'))
-local VirtualInputManager = cloneref(game:GetService('VirtualInputManager'))
-local ReplicatedStorage = cloneref(game:GetService('ReplicatedStorage'))
-local UserInputService = cloneref(game:GetService('UserInputService'))
-local ContentProvider = cloneref(game:GetService('ContentProvider'))
-local TweenService = cloneref(game:GetService('TweenService'))
-local HttpService = cloneref(game:GetService('HttpService'))
-local TextService = cloneref(game:GetService('TextService'))
-local GuiService = cloneref(game:GetService('GuiService'))
-local RunService = cloneref(game:GetService('RunService'))
-local Workspace = cloneref(game:GetService('Workspace'))
-local Lighting = cloneref(game:GetService('Lighting'))
-local Players = cloneref(game:GetService('Players'))
-local CoreGui = cloneref(game:GetService('CoreGui'))
-local Debris = cloneref(game:GetService('Debris'))
-local Player = Players.LocalPlayer
+repeat task.wait(1) until game:IsLoaded();
 
-local Last_Input = UserInputService:GetLastInputType()
-local Grab_Parry
-local Parries = 0
+local requestSending = false;
+local fSetClipboard, fRequest, fStringChar, fToString, fStringSub, fOsTime, fMathRandom, fMathFloor, fGetHwid = setclipboard or toclipboard, request or http_request or syn_request, string.char, tostring, string.sub, os.time, math.random, math.floor, gethwid or function() return game:GetService("Players").LocalPlayer.UserId end
+local cachedLink, cachedTime = "", 0;
 
-local Runtime = Workspace.Runtime
-local Speed_Divisor_Multiplier = 1.1
-local LobbyAP_Speed_Divisor_Multiplier = 1.1
-local firstParryFired = false
-local ParryThreshold = 1
-local firstParryType = 'F_Key'
-
-local function performFirstPress(parryType)
-    if parryType == 'F_Key' then
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.F, false, nil)
-    elseif parryType == 'Left_Click' then
-        VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
-    elseif parryType == 'Navigation' then
-        GuiService.SelectedObject = Players.LocalPlayer.PlayerGui.Hotbar.Block
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        task.wait(0.01)
-        GuiService.SelectedObject = nil
-    end
+local host = "https://api.platoboost.com";
+local hostResponse = fRequest({
+    Url = host .. "/public/connectivity",
+    Method = "GET"
+});
+if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
+    host = "https://api.platoboost.net";
 end
 
-if not LPH_OBFUSCATED then
-    function LPH_JIT(...) return ... end
-    function LPH_JIT_MAX(...) return ... end
-    function LPH_NO_VIRTUALIZE(...) return ... end
-end
+function cacheLink()
+    if cachedTime + (10*60) < fOsTime() then
+        local response = fRequest({
+            Url = host .. "/public/start",
+            Method = "POST",
+            Body = lEncode({
+                service = service,
+                identifier = lDigest(fGetHwid())
+            }),
+            Headers = {
+                ["Content-Type"] = "application/json"
+            }
+        });
 
-local PropertyChangeOrder = {}
+        if response.StatusCode == 200 then
+            local decoded = lDecode(response.Body);
 
-local HashOne
-local HashTwo
-local HashThree
-
-LPH_NO_VIRTUALIZE(function()
-    for Index, Value in next, getgc() do
-        if rawequal(typeof(Value), 'function') and islclosure(Value) and getrenv().debug.info(Value, 's'):find('SwordsController') then
-            if rawequal(getrenv().debug.info(Value, 'l'), 276) then
-                HashOne = getconstant(Value, 62)
-                HashTwo = getconstant(Value, 64)
-                HashThree = getconstant(Value, 65)
+            if decoded.success == true then
+                cachedLink = decoded.data.url;
+                cachedTime = fOsTime();
+                return true, cachedLink;
+            else
+                onMessage(decoded.message);
+                return false, decoded.message;
             end
+        elseif response.StatusCode == 429 then
+            local msg = "you are being rate limited, please wait 20 seconds and try again.";
+            onMessage(msg);
+            return false, msg;
         end
-    end
-end)()
 
-LPH_NO_VIRTUALIZE(function()
-    for Index, Object in next, game:GetDescendants() do
-        if Object:IsA('RemoteEvent') and string.find(Object.Name, '\n') then
-            Object.Changed:Once(function()
-                table.insert(PropertyChangeOrder, Object)
-            end)
-        end
-    end
-end)()
-
-repeat task.wait()
-until #PropertyChangeOrder == 3
-
-local ShouldPlayerJump = PropertyChangeOrder[1]
-local MainRemote = PropertyChangeOrder[2]
-local GetOpponentPosition = PropertyChangeOrder[3]
-
-local Parry_Key
-
-for _, Value in pairs(getconnections(game:GetService('Players').LocalPlayer.PlayerGui.Hotbar.Block.Activated)) do
-    if Value and Value.Function and not iscclosure(Value.Function)  then
-        for _,Value2 in pairs(getupvalues(Value.Function)) do
-            if type(Value2) == 'function' then
-                Parry_Key = getupvalue(getupvalue(Value2, 2), 17)
-            end
-        end
+        local msg = "Failed to cache link.";
+        onMessage(msg);
+        return false, msg;
+    else
+        return true, cachedLink;
     end
 end
 
-local function Parry(...)
-    ShouldPlayerJump:FireServer(HashOne, Parry_Key, ...)
-    MainRemote:FireServer(HashTwo, Parry_Key, ...)
-    GetOpponentPosition:FireServer(HashThree, Parry_Key, ...)
-end
+cacheLink();
 
-local Animation = {}
-Animation.storage = {}
-Animation.current = nil
-Animation.track = nil
-
-for _, v in pairs(game:GetService('ReplicatedStorage').Misc.Emotes:GetChildren()) do
-    if v:IsA('Animation') and v:GetAttribute('EmoteName') then
-        local Emote_Name = v:GetAttribute('EmoteName')
-        Animation.storage[Emote_Name] = v
+local generateNonce = function()
+    local str = ""
+    for _ = 1, 16 do
+        str = str .. fStringChar(fMathFloor(fMathRandom() * (122 - 97 + 1)) + 97)
     end
+    return str
 end
 
-local Emotes_Data = {}
-
-for Object in pairs(Animation.storage) do
-    table.insert(Emotes_Data, Object)
-end
-
-table.sort(Emotes_Data)
-
-local Auto_Parry = {}
-local Connections_Manager = {}
-local Selected_Parry_Type = 'Camera'
-
-local Parried = false
-local deathshit = false
-local Last_Parry = 0
-
-local CurrentBall = nil
-
-local PlayerGui = Player:WaitForChild('PlayerGui')
-local Hotbar = PlayerGui:WaitForChild('Hotbar')
-
-local ParryCD = Hotbar.Block.UIGradient
-local AbilityCD = Hotbar.Ability.UIGradient
-
-local isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
-
-local sword_animation_type = 'GrabParry'
-local GrabParryAnimation = game:GetService('ReplicatedStorage').Shared.SwordAPI.Collection.Default:FindFirstChild('GrabParry')
-local GetSword = game:GetService('ReplicatedStorage').Shared.ReplicatedInstances.Swords.GetSword:Invoke(Player.Character:GetAttribute('CurrentlyEquippedSword'))
-local Tornado_Time = tick()
-local LR, VelHist, LastWarp, LastCurve = 0, {}, tick(), tick()
-
-do-- anti afk
-    for _, v in next, getconnections(Player.Idled) do
-        v:Disable()
+for _ = 1, 5 do
+    local oNonce = generateNonce();
+    task.wait(0.2)
+    if generateNonce() == oNonce then
+        local msg = "platoboost nonce error.";
+        onMessage(msg);
+        error(msg);
     end
 end
 
-function Auto_Parry.Parry_Animation()
-    GetSword = game:GetService('ReplicatedStorage').Shared.ReplicatedInstances.Swords.GetSword:Invoke(Player.Character:GetAttribute('CurrentlyEquippedSword'))
-    if not Player.Character:GetAttribute('CurrentlyEquippedSword') then
-        return
-    end
-    if not game:GetService('ReplicatedStorage').Shared.SwordAPI.Collection.Default:FindFirstChild('GrabParry') then
-        return
-    end
-    if not GetSword or not GetSword['AnimationType'] then
-        return
-    end
-
-    for _, v in pairs(game:GetService('ReplicatedStorage').Shared.SwordAPI.Collection:GetChildren()) do
-        if v.Name == GetSword['AnimationType'] then
-            if v:FindFirstChild('GrabParry') or v:FindFirstChild('Grab') then
-                sword_animation_type = 'GrabParry'
-                if v:FindFirstChild('Grab') then
-                    sword_animation_type = 'Grab'
-                end
-
-                GrabParryAnimation = v[sword_animation_type]
-            end
-        end
-    end
-
-    Grab_Parry = Player.Character.Humanoid.Animator:LoadAnimation(GrabParryAnimation)
-    Grab_Parry:Play()
-end
-
-function Auto_Parry.Play_Animation(v)
-    local Animations = Animation.storage[v]
-
-    if not Animations then
-        return false
-    end
-
-    local Animator = Player.Character.Humanoid.Animator
-
-    if Animation.track then
-        Animation.track:Stop()
-    end
-
-    Animation.track = Animator:LoadAnimation(Animations)
-    Animation.track:Play()
-
-    Animation.current = v
-end
-
-function Auto_Parry.Get_Balls()
-    local Balls = {}
-
-    for _, Instance in pairs(Workspace.Balls:GetChildren()) do
-        if Instance:GetAttribute('realBall') then
-            Instance.CanCollide = false
-            table.insert(Balls, Instance)
-        end
-    end
-    return Balls
-end
-
-function Auto_Parry.Get_Ball()
-    for _, Instance in pairs(Workspace.Balls:GetChildren()) do
-        if Instance:GetAttribute('realBall') then
-            Instance.CanCollide = false
-            return Instance
-        end
+local copyLink = function()
+    local success, link = cacheLink();
+    
+    if success then
+        fSetClipboard(link);
     end
 end
 
-function Auto_Parry.Lobby_Balls()
-    for _, Instance in pairs(Workspace.TrainingBalls:GetChildren()) do
-        if Instance:GetAttribute('realBall') then
-            return Instance
-        end
-    end
-end
+local redeemKey = function(key)
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/redeem/" .. fToString(service);
 
-function Auto_Parry.Closest_Player()
-    local Max_Distance = math.huge
-    local Found_Entity = nil
-
-    for _, Entity in pairs(Workspace.Alive:GetChildren()) do
-        if tostring(Entity) ~= tostring(Player) then
-            if Entity.PrimaryPart then  -- Check if PrimaryPart exists
-                local Distance = Player:DistanceFromCharacter(Entity.PrimaryPart.Position)
-                if Distance < Max_Distance then
-                    Max_Distance = Distance
-                    Found_Entity = Entity
-                end
-            end
-        end
-    end
-
-    return Found_Entity
-end
-
-function Auto_Parry:Get_Entity_Properties()
-    Auto_Parry.Closest_Player()
-
-    if not Auto_Parry.Closest_Player() then
-        return false
-    end
-
-    local Entity_Velocity = Auto_Parry.Closest_Player().PrimaryPart.Velocity
-    local Entity_Direction = (Player.Character.PrimaryPart.Position - Auto_Parry.Closest_Player().PrimaryPart.Position).Unit
-    local Entity_Distance = (Player.Character.PrimaryPart.Position - Auto_Parry.Closest_Player().PrimaryPart.Position).Magnitude
-
-    return {
-        Velocity = Entity_Velocity,
-        Direction = Entity_Direction,
-        Distance = Entity_Distance
+    local body = {
+        identifier = lDigest(fGetHwid()),
+        key = key
     }
+
+    if useNonce then
+        body.nonce = nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "POST",
+        Body = lEncode(body),
+        Headers = {
+            ["Content-Type"] = "application/json"
+        }
+    });
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+
+        if decoded.success == true then
+            if decoded.data.valid == true then
+                if useNonce then
+                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+                        return true;
+                    else
+                        onMessage("failed to verify integrity.");
+                        return false;
+                    end    
+                else
+                    return true;
+                end
+            else
+                onMessage("key is invalid.");
+                return false;
+            end
+        else
+            if fStringSub(decoded.message, 1, 27) == "unique constraint violation" then
+                onMessage("you already have an active key, please wait for it to expire before redeeming it.");
+                return false;
+            else
+                onMessage(decoded.message);
+                return false;
+            end
+        end
+    elseif response.StatusCode == 429 then
+        onMessage("you are being rate limited, please wait 20 seconds and try again.");
+        return false;
+    else
+        onMessage("server returned an invalid status code, please try again later.");
+        return false; 
+    end
 end
 
-function Auto_Parry.Parry_Data(Parry_Type)
-    Auto_Parry.Closest_Player()
-    
-    local Events = {}
-    local Camera = workspace.CurrentCamera
-    local Vector2_Mouse_Location
-    
-    if Last_Input == Enum.UserInputType.MouseButton1 or (Enum.UserInputType.MouseButton2 or Last_Input == Enum.UserInputType.Keyboard) then
-        local Mouse_Location = UserInputService:GetMouseLocation()
-        Vector2_Mouse_Location = {Mouse_Location.X, Mouse_Location.Y}
+local verifyKey = function(key)
+    if requestSending == true then
+        onMessage("a request is already being sent, please slow down.");
+        return false;
     else
-        Vector2_Mouse_Location = {Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2}
-    end
-    
-    if isMobile then
-        Vector2_Mouse_Location = {Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2}
-    end
-    
-    local Players_Screen_Positions = {}
-    for _, v in pairs(workspace.Alive:GetChildren()) do
-        if v ~= Player.Character then
-            local worldPos = v.PrimaryPart.Position
-            local screenPos, isOnScreen = Camera:WorldToScreenPoint(worldPos)
-            
-            if isOnScreen then
-                Players_Screen_Positions[v] = Vector2.new(screenPos.X, screenPos.Y)
-            end
-            
-            Events[tostring(v)] = screenPos
-        end
-    end
-    
-    if Parry_Type == 'Camera' then
-        return {0, Camera.CFrame, Events, Vector2_Mouse_Location}
-    end
-    
-    if Parry_Type == 'Backwards' then
-        local Backwards_Direction = Camera.CFrame.LookVector * -10000
-        Backwards_Direction = Vector3.new(Backwards_Direction.X, 0, Backwards_Direction.Z)
-        return {0, CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + Backwards_Direction), Events, Vector2_Mouse_Location}
+        requestSending = true;
     end
 
-    if Parry_Type == 'Straight' then
-        local Aimed_Player = nil
-        local Closest_Distance = math.huge
-        local Mouse_Vector = Vector2.new(Vector2_Mouse_Location[1], Vector2_Mouse_Location[2])
-        
-        for _, v in pairs(workspace.Alive:GetChildren()) do
-            if v ~= Player.Character then
-                local worldPos = v.PrimaryPart.Position
-                local screenPos, isOnScreen = Camera:WorldToScreenPoint(worldPos)
-                
-                if isOnScreen then
-                    local playerScreenPos = Vector2.new(screenPos.X, screenPos.Y)
-                    local distance = (Mouse_Vector - playerScreenPos).Magnitude
-                    
-                    if distance < Closest_Distance then
-                        Closest_Distance = distance
-                        Aimed_Player = v
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/whitelist/" .. fToString(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key;
+
+    if useNonce then
+        endpoint = endpoint .. "&nonce=" .. nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "GET",
+    });
+
+    requestSending = false;
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+
+        if decoded.success == true then
+            if decoded.data.valid == true then
+                if useNonce then
+                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+                        return true;
+                    else
+                        onMessage("failed to verify integrity.");
+                        return false;
                     end
+                else
+                    return true;
+                end
+            else
+                if fStringSub(key, 1, 4) == "KEY_" then
+                    return redeemKey(key);
+                else
+                    onMessage("key is invalid.");
+                    return false;
                 end
             end
-        end
-        
-        if Aimed_Player then
-            return {0, CFrame.new(Player.Character.PrimaryPart.Position, Aimed_Player.PrimaryPart.Position), Events, Vector2_Mouse_Location}
         else
-            return {0, CFrame.new(Player.Character.PrimaryPart.Position, Auto_Parry.Closest_Player().PrimaryPart.Position), Events, Vector2_Mouse_Location}
+            onMessage(decoded.message);
+            return false;
         end
+    elseif response.StatusCode == 429 then
+        onMessage("you are being rate limited, please wait 20 seconds and try again.");
+        return false;
+    else
+        onMessage("server returned an invalid status code, please try again later.");
+        return false;
     end
-    
-    if Parry_Type == 'Random' then
-        return {0, CFrame.new(Camera.CFrame.Position, Vector3.new(math.random(-4000, 4000), math.random(-4000, 4000), math.random(-4000, 4000))), Events, Vector2_Mouse_Location}
-    end
-    
-    if Parry_Type == 'High' then
-        local High_Direction = Camera.CFrame.UpVector * 10000
-        return {0, CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + High_Direction), Events, Vector2_Mouse_Location}
-    end
-    
-    if Parry_Type == 'Left' then
-        local Left_Direction = Camera.CFrame.RightVector * 10000
-        return {0, CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position - Left_Direction), Events, Vector2_Mouse_Location}
-    end
-    
-    if Parry_Type == 'Right' then
-        local Right_Direction = Camera.CFrame.RightVector * 10000
-        return {0, CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + Right_Direction), Events, Vector2_Mouse_Location}
-    end
-
-    if Parry_Type == 'RandomTarget' then
-        local candidates = {}
-        for _, v in pairs(workspace.Alive:GetChildren()) do
-            if v ~= Player.Character and v.PrimaryPart then
-                local screenPos, isOnScreen = Camera:WorldToScreenPoint(v.PrimaryPart.Position)
-                if isOnScreen then
-                    table.insert(candidates, {
-                        character = v,
-                        screenXY  = { screenPos.X, screenPos.Y }
-                    })
-                end
-            end
-        end
-        if #candidates > 0 then
-            local pick = candidates[ math.random(1, #candidates) ]
-            local lookCFrame = CFrame.new(Player.Character.PrimaryPart.Position, pick.character.PrimaryPart.Position)
-            return {0, lookCFrame, Events, pick.screenXY}
-        else
-            return {0, Camera.CFrame, Events, { Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2 }}
-        end
-    end
-    
-    return Parry_Type
 end
 
-function Auto_Parry.Parry(Parry_Type)
-    local Parry_Data = Auto_Parry.Parry_Data(Parry_Type)
+local getFlag = function(name)
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/flag/" .. fToString(service) .. "?name=" .. name;
 
-    if not firstParryFired then
-        performFirstPress(firstParryType)
-        firstParryFired = true
+    if useNonce then
+        endpoint = endpoint .. "&nonce=" .. nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "GET",
+    });
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+
+        if decoded.success == true then
+            if useNonce then
+                if decoded.data.hash == lDigest(fToString(decoded.data.value) .. "-" .. nonce .. "-" .. secret) then
+                    return decoded.data.value;
+                else
+                    onMessage("failed to verify integrity.");
+                    return nil;
+                end
+            else
+                return decoded.data.value;
+            end
+        else
+            onMessage(decoded.message);
+            return nil;
+        end
     else
-        Parry(Parry_Data[1], Parry_Data[2], Parry_Data[3], Parry_Data[4])
+        return nil;
+    end
+end
+-------------------------------------- FUNCTION SAVE KEY --------------------------------------
+local KeySystem = {}
+KeySystem.KeyFileName = "RipperKey.lua"
+
+onMessage = function(message)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Key System",
+        Text = tostring(message)
+    })
+end
+
+KeySystem.CheckSavedKey = function()
+    if not isfile then
+        return false, "Your Executor does not support isfile/readfile"
     end
 
-    if Parries > 7 then
-        return false
-    end
-    if Parries >= 0 then
-        Parries += 1
-    else
-        Parries = 0
+    if isfile(KeySystem.KeyFileName) then
+        local savedKey = readfile(KeySystem.KeyFileName)
+        if verifyKey(savedKey) then
+            return true, "Valid Key"
+        else
+            delfile(KeySystem.KeyFileName)
+        end
     end
 
+    return false, "Invalid Or Unsaved Key"
+end
 
-    task.delay(0.5, function()
-        if Parries > 0 then
-            Parries -= 1
+KeySystem.SaveKey = function(key)
+    if not writefile then
+        return false, "Executor của bạn không hỗ trợ writefile"
+    end
+    writefile(KeySystem.KeyFileName, key)
+    return true, "Key Saved"
+end
+
+KeySystem.CreateKeyUI = function()
+    local success, keyValid = KeySystem.CheckSavedKey()
+    if success then
+        return true
+    end
+-------------------------------------- Ui Library GETKEY BRUH --------------------------------------
+    local ScreenGui = Instance.new("ScreenGui")
+    local UiLibrary = Instance.new("Frame")
+    local CloseUi = Instance.new("TextButton")
+    local UICorner = Instance.new("UICorner")
+    local UICorner_2 = Instance.new("UICorner")
+    local UiName = Instance.new("TextLabel")
+    local LogoHub = Instance.new("ImageLabel")
+    local UICorner_3 = Instance.new("UICorner")
+    local Discord = Instance.new("TextButton")
+    local SocialMedia = Instance.new("TextButton")
+    local UICorner_4 = Instance.new("UICorner")
+    local Website = Instance.new("TextButton")
+    local UICorner_5 = Instance.new("UICorner")
+    local Youtube = Instance.new("TextButton")
+    local UICorner_6 = Instance.new("UICorner")
+    local KeyInput = Instance.new("TextBox")
+    local UICorner_7 = Instance.new("UICorner")
+    local Submit = Instance.new("TextButton")
+    local UICorner_8 = Instance.new("UICorner")
+    local GetKey = Instance.new("TextButton")
+    local UICorner_9 = Instance.new("UICorner")
+    local UICorner_11 = Instance.new("UICorner")
+
+    ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    UiLibrary.Name = "UiLibrary"
+    UiLibrary.Parent = ScreenGui
+    UiLibrary.Active = true
+    UiLibrary.BackgroundColor3 = Color3.fromRGB(0, 27, 84)
+    UiLibrary.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    UiLibrary.BorderSizePixel = 0
+    UiLibrary.Position = UDim2.new(0.265384614, 0, 0.0440494567, 0)
+    UiLibrary.Size = UDim2.new(0, 495, 0, 371)
+
+    CloseUi.Name = "Close Ui"
+    CloseUi.Parent = UiLibrary
+    CloseUi.BackgroundColor3 = Color3.fromRGB(255, 200, 2)
+    CloseUi.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    CloseUi.BorderSizePixel = 0
+    CloseUi.Position = UDim2.new(0.894265234, 0, 0.0191693287, 0)
+    CloseUi.Size = UDim2.new(0, 49, 0, 44)
+    CloseUi.Font = Enum.Font.Unknown
+    CloseUi.Text = "X"
+    CloseUi.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseUi.TextSize = 30.000
+
+    UICorner.CornerRadius = UDim.new(0, 15)
+    UICorner.Parent = CloseUi
+
+    UICorner_2.CornerRadius = UDim.new(0, 15)
+    UICorner_2.Parent = UiLibrary
+
+    UiName.Name = "UiName"
+    UiName.Parent = UiLibrary
+    UiName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    UiName.BackgroundTransparency = 1.000
+    UiName.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    UiName.BorderSizePixel = 0
+    UiName.Position = UDim2.new(0.275985658, 0, 0.0191693287, 0)
+    UiName.Size = UDim2.new(0, 200, 0, 50)
+    UiName.Font = Enum.Font.SourceSansBold
+    UiName.Text = "Ripper Hub | Key Systems"
+    UiName.TextColor3 = Color3.fromRGB(2, 251, 255)
+    UiName.TextSize = 30.000
+
+    LogoHub.Name = "LogoHub"
+    LogoHub.Parent = UiLibrary
+    LogoHub.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    LogoHub.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    LogoHub.BorderSizePixel = 0
+    LogoHub.Position = UDim2.new(0.062626265, 0, 0.198412374, 0)
+    LogoHub.Size = UDim2.new(0, 92, 0, 90)
+    LogoHub.Image = "rbxassetid://122504813117904"
+
+    UICorner_3.CornerRadius = UDim.new(0, 15)
+    UICorner_3.Parent = LogoHub
+
+    Discord.Name = "Discord"
+    Discord.Parent = UiLibrary
+    Discord.BackgroundColor3 = Color3.fromRGB(0, 110, 255)
+    Discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Discord.BorderSizePixel = 0
+    Discord.Position = UDim2.new(0.274747461, 0, 0.378830075, 0)
+    Discord.Size = UDim2.new(0, 72, 0, 26)
+    Discord.Font = Enum.Font.SourceSansBold
+    Discord.Text = "Discord"
+    Discord.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Discord.TextSize = 14.000
+
+    UICorner_4.CornerRadius = UDim.new(0, 15)
+    UICorner_4.Parent = Discord
+
+    Website.Name = "Website"
+    Website.Parent = UiLibrary
+    Website.BackgroundColor3 = Color3.fromRGB(0, 192, 221)
+    Website.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Website.BorderSizePixel = 0
+    Website.Position = UDim2.new(0.571717143, 0, 0.378830075, 0)
+    Website.Size = UDim2.new(0, 74, 0, 26)
+    Website.Font = Enum.Font.SourceSansBold
+    Website.Text = "Website"
+    Website.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Website.TextSize = 14.000
+
+    UICorner_5.CornerRadius = UDim.new(0, 15)
+    UICorner_5.Parent = Website
+
+    Youtube.Name = "Youtube"
+    Youtube.Parent = UiLibrary
+    Youtube.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    Youtube.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Youtube.BorderSizePixel = 0
+    Youtube.Position = UDim2.new(0.420202017, 0, 0.378830075, 0)
+    Youtube.Size = UDim2.new(0, 75, 0, 26)
+    Youtube.Font = Enum.Font.SourceSansBold
+    Youtube.Text = "Youtube"
+    Youtube.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Youtube.TextSize = 14.000
+
+    UICorner_6.CornerRadius = UDim.new(0, 15)
+    UICorner_6.Parent = Youtube
+
+    SocialMedia.Name = "Social Media"
+    SocialMedia.Parent = UiLibrary
+    SocialMedia.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    SocialMedia.BackgroundTransparency = 1.000
+    SocialMedia.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    SocialMedia.BorderSizePixel = 0
+    SocialMedia.Position = UDim2.new(0.296969712, 0, 0.200557098, 0)
+    SocialMedia.Size = UDim2.new(0, 200, 0, 50)
+    SocialMedia.Font = Enum.Font.SourceSansBold
+    SocialMedia.Text = "SOCIAL MEDIA LINK"
+    SocialMedia.TextColor3 = Color3.fromRGB(0, 234, 255)
+    SocialMedia.TextSize = 30.000
+
+    UICorner_11.Parent = SocialMedia
+
+    KeyInput.Name = "KeyInput"
+    KeyInput.Parent = UiLibrary
+    KeyInput.BackgroundColor3 = Color3.fromRGB(0, 2, 34)
+    KeyInput.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    KeyInput.BorderSizePixel = 0
+    KeyInput.Position = UDim2.new(0.062626265, 0, 0.537611961, 0)
+    KeyInput.Size = UDim2.new(0, 435, 0, 48)
+    KeyInput.Font = Enum.Font.SourceSansBold
+    KeyInput.Text = "Enter your key here..."
+    KeyInput.TextColor3 = Color3.fromRGB(122, 122, 122)
+    KeyInput.TextSize = 14.000
+
+    UICorner_7.CornerRadius = UDim.new(0, 15)
+    UICorner_7.Parent = KeyInput
+
+    Submit.Name = "Submit"
+    Submit.Parent = UiLibrary
+    Submit.BackgroundColor3 = Color3.fromRGB(167, 164, 255)
+    Submit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Submit.BorderSizePixel = 0
+    Submit.Position = UDim2.new(0.0828282833, 0, 0.756406307, 0)
+    Submit.Size = UDim2.new(0, 200, 0, 50)
+    Submit.Font = Enum.Font.SourceSansBold
+    Submit.Text = "SUBMIT"
+    Submit.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Submit.TextSize = 25.000
+
+    UICorner_8.CornerRadius = UDim.new(0, 15)
+    UICorner_8.Parent = Submit
+
+    GetKey.Name = "GetKey"
+    GetKey.Parent = UiLibrary
+    GetKey.BackgroundColor3 = Color3.fromRGB(167, 164, 255)
+    GetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    GetKey.BorderSizePixel = 0
+    GetKey.Position = UDim2.new(0.537373722, 0, 0.756406307, 0)
+    GetKey.Size = UDim2.new(0, 200, 0, 50)
+    GetKey.Font = Enum.Font.SourceSansBold
+    GetKey.Text = "GET KEY"
+    GetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+    GetKey.TextSize = 25.000
+
+    UICorner_9.CornerRadius = UDim.new(0, 15)
+    UICorner_9.Parent = GetKey
+
+-------------------------------------- BUTTON GETKEY --------------------------------------
+    
+    CloseUi.MouseButton1Click:Connect(function()
+        if ScreenGui then
+            ScreenGui:Destroy()
         end
     end)
-end
 
-function Auto_Parry.Linear_Interpolation(a, b, time_volume)
-    return a + (b - a) * time_volume
-end
+    GetKey.MouseButton1Click:Connect(function() 
+        copyLink()
+    end)
 
-function Auto_Parry.Is_Curved()
-    local Ball = Auto_Parry.Get_Ball()
+    Youtube.MouseButton1Click:Connect(function() 
+        setclipboard("https://www.youtube.com/@exe_evil")
+    end)
 
+    Discord.MouseButton1Click:Connect(function() 
+        setclipboard("https://discord.gg/p4nbCfs7zW")
+    end)
 
-    if not Ball or not Ball:FindFirstChild('zoomies') then return false end
+    SocialMedia.MouseButton1Click:Connect(function() 
+        setclipboard("Copy SOCIAL MEDIA LINK")
+    end)
     
-    local z, v = Ball.zoomies, Ball.zoomies.VectorVelocity
-    local s, d = v.Magnitude, v.Unit
-    local r = Player.Character and Player.Character.PrimaryPart
-    if not r then return false end
-    
-    local p, bp = r.Position, Ball.Position
-    local dir, dist = (p - bp).Unit, (p - bp).Magnitude
-    local dot = dir:Dot(d)
-    local ping = game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue()
-    
-    if ping > 150 then 
-        ping *= 1.1 
-    elseif ping > 200 then 
-        ping *= 1.25 
-    end
-    
-    table.insert(VelHist, v)
-    if #VelHist > 4 then table.remove(VelHist, 1) end
-    
-    local rt = dist / s - ping / 985
-    local dT = 15 - math.min(dist / 1000, 15) + math.min(s / 100, 40)
-    
-    if Ball:FindFirstChild('AeroDynamicSlashVFX') then
-        Debris:AddItem(Ball.AeroDynamicSlashVFX, 0)
-        Tornado_Time = tick()
-    end
-    
-    if Runtime:FindFirstChild('Tornado') and (tick() - Tornado_Time) < ((Runtime.Tornado:GetAttribute('TornadoTime') or 1) + 0.314159) then
-        return true
-    end
-    
-    if s > 160 and rt > ping / 9.85 then
-        local adjust = s < 300 and 15 or s < 600 and 16 or s < 1000 and 17 or s < 1500 and 19 or 20
-        dT = math.max(dT - adjust, adjust)
-    end
-    
-    if dist < dT then return false end
-    
-    local curve_time = s < 300 and rt / 1.2 or s < 450 and rt / 1.21 or s < 600 and rt / 1.335 or rt / 1.5
-    if (tick() - LastCurve) < curve_time then return true end
-    
-    local dth = 0.485 - ping / 985
-    local diff = dir:Dot((d - v.Unit).Unit)
-    if (dot - diff) < dth then return true end
-    
-    local rad = math.deg(math.asin(math.clamp(dot, -1, 1)))
-    LR = Auto_Parry.Linear_Interpolation(LR, rad, 0.8)
-    
-    local warp_time = s < 300 and rt / 1.185 or rt / 1.5
-    local warp_thres = s < 300 and 0.0205 or 0.018
-    if LR < warp_thres then LastWarp = tick() end
-    if (tick() - LastWarp) < warp_time then return true end
-    
-    if #VelHist == 4 then
-        local dv = function(i) return dir:Dot((d - VelHist[i].Unit).Unit) end
-        if dot - dv(1) < dth or dot - dv(2) < dth then return true end
-    end
-    
-    local hp = Vector3.new(p.X - bp.X, 0, p.Z - bp.Z).Unit
-    local bd = Vector3.new(d.X, 0, d.Z).Unit
-    if hp.Magnitude > 0 and bd.Magnitude > 0 then
-        local back = math.deg(math.acos(math.clamp((-hp):Dot(bd), -1, 1)))
-        if back < 90 - ping / 25 then return true end
-    end
-    
-    return dot < dth
-end
-
-function Auto_Parry:Get_Ball_Properties()
-    local Ball = Auto_Parry.Get_Ball()
-
-    local Ball_Velocity = Vector3.zero
-    local Ball_Origin = Ball
-
-    local Ball_Direction = (Player.Character.PrimaryPart.Position - Ball_Origin.Position).Unit
-    local Ball_Distance = (Player.Character.PrimaryPart.Position - Ball.Position).Magnitude
-    local Ball_Dot = Ball_Direction:Dot(Ball_Velocity.Unit)
-
-    return {
-        Velocity = Ball_Velocity,
-        Direction = Ball_Direction,
-        Distance = Ball_Distance,
-        Dot = Ball_Dot
-    }
-end
-
-function Auto_Parry.Spam_Service(self)
-    local Ball = Auto_Parry.Get_Ball()
-
-    local Entity = Auto_Parry.Closest_Player()
-
-    if not Ball then
-        return false
-    end
-
-    if not Entity or not Entity.PrimaryPart then
-        return false
-    end
-
-    local Spam_Accuracy = 0
-
-    local Velocity = Ball.AssemblyLinearVelocity
-    local Speed = Velocity.Magnitude
-
-    local Direction = (Player.Character.PrimaryPart.Position - Ball.Position).Unit
-    local Dot = Direction:Dot(Velocity.Unit)
-
-    local Target_Position = Entity.PrimaryPart.Position
-    local Target_Distance = Player:DistanceFromCharacter(Target_Position)
-
-    local Maximum_Spam_Distance = self.Ping + math.min(Speed / 6, 95)
-
-    if self.Entity_Properties.Distance > Maximum_Spam_Distance then
-        return Spam_Accuracy
-    end
-
-    if self.Ball_Properties.Distance > Maximum_Spam_Distance then
-        return Spam_Accuracy
-    end
-
-    if Target_Distance > Maximum_Spam_Distance then
-        return Spam_Accuracy
-    end
-
-    local Maximum_Speed = 5 - math.min(Speed / 5, 5)
-    local Maximum_Dot = math.clamp(Dot, -1, 0) * Maximum_Speed
-
-    Spam_Accuracy = Maximum_Spam_Distance - Maximum_Dot
-
-    return Spam_Accuracy
-end
-
-ReplicatedStorage.Remotes.DeathBall.OnClientEvent:Connect(function(c, d)
-    if d then
-        deathshit = true
-    else
-        deathshit = false
-    end
-end)
-
-local function GetBall()
-    for _, Ball in ipairs(Workspace.Balls:GetChildren()) do
-        if Ball:FindFirstChild('ff') then
-            return Ball
-        end
-    end
-    return nil
-end
-
-local function isCooldownInEffect1(uigradient)
-    return uigradient.Offset.Y < 0.4
-end
-
-local function cooldownProtection()
-    if isCooldownInEffect1(ParryCD) then
-        game:GetService('ReplicatedStorage').Remotes.AbilityButtonPress:Fire()
-        return true
-    end
-    return false
-end
-
-local Section1 = Tab:Section({Title = 'Auto Parry', Side = 'Left'})
-local Section2 = Tab:Section({Title = 'Auto Spam Parry', Side = 'Right'})
-local Section3 = Tab:Section({Title = 'Manual Spam', Side = 'Left'})
-local Section4 = Tab:Section({Title = 'Lobby Auto Parry', Side = 'Right'})
-
-Section1:Toggle({
-	Title = 'Auto Parry',
-	Value = false,
-	Callback = function(value)
-        if value then
-            Connections_Manager['Auto Parry'] = RunService.PreSimulation:Connect(function()
-                local Balls = Auto_Parry.Get_Balls()
-
-                for _, Ball in pairs(Balls) do
-                    if not Ball then
-                        return
-                    end
-                    local Zoomies = Ball:FindFirstChild('zoomies')
-                    if not Zoomies then
-                        return
-                    end
-                    if Parried then
-                        Ball:GetAttributeChangedSignal('target'):Wait()
-                        Parried = false
-                    end
-
-                    local Ball_Target = Ball:GetAttribute('target')
-                    local Velocity = Zoomies.VectorVelocity
-                    local Distance = Player:DistanceFromCharacter(Ball.Position)
-                    local Ping = game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue() / 10
-                    local Ping_Threshold = math.clamp(Ping / 10, 5, 17)
-                    local Speed = Velocity.Magnitude
-                    local cappedSpeedDiff = math.min(math.max(Speed - 9.5, 0), 650)
-                    local speed_divisor_base = 2.4 + cappedSpeedDiff * 0.002
-
-                    local effectiveMultiplier = Speed_Divisor_Multiplier
-
-                    local speed_divisor = speed_divisor_base * effectiveMultiplier
-                    local Parry_Accuracy = Ping_Threshold + math.max(Speed / speed_divisor, 9.5)
-
-                    if Ball:FindFirstChild('AeroDynamicSlashVFX') then
-                        Debris:AddItem(Ball.AeroDynamicSlashVFX, 0)
-                        Tornado_Time = tick()
-                    end
-
-                    if Runtime:FindFirstChild('Tornado') then
-                        if (tick() - Tornado_Time) < (Runtime.Tornado:GetAttribute('TornadoTime') or 1) + 0.314159 then
-                            return
-                        end
-                    end
-
-                    if Auto_Parry.Is_Curved() then
-                        return
-                    end
-
-                    if Ball:FindFirstChild('ComboCounter') then
-                        return
-                    end
-
-                    if Player.Character.PrimaryPart:FindFirstChild('SingularityCape') then
-                        return
-                    end
-
-                    if getgenv().DeathSlashDetection and deathshit then
-                        return
-                    end
-
-                    local Last_Parrys = tick()
-                    repeat RunService.PreSimulation:Wait()
-                    until (tick() - Last_Parrys) >= 1 or not Parried
-                    Parried = false
-                end
-            end)
-        else
-            if Connections_Manager['Auto Parry'] then
-                Connections_Manager['Auto Parry']:Disconnect()
-                Connections_Manager['Auto Parry'] = nil
-            end
-        end
-	end,
-})
-
-Section1:Slider({
-	Title = 'Parry Accuracy',
-	Min = 1,
-	Max = 100,
-	Value = 100,
-	Callback = function(value)
-		Speed_Divisor_Multiplier = 0.7 + (value - 1) * (0.35 / 99)
-	end,
-})
-
-local parryTypeMap = {
-    ['Camera'] = 'Camera',
-    ['Random'] = 'Random',
-    ['Backwards'] = 'Backwards',
-    ['Straight'] = 'Straight',
-    ['High'] = 'High',
-    ['Left'] = 'Left',
-    ['Right'] = 'Right',
-    ['Random Target'] = 'RandomTarget'
-}
-
-Section1:Dropdown({
-	Title = 'Curve Type',
-	List = {
-		'Camera',
-		'Random',
-		'Backwards',
-		'Straight',
-		'High',
-		'Left',
-		'Right',
-		'Random Target'
-	},
-	Value = 'Camera',
-	Multi = false,
-	Callback = function(value)
-		Selected_Parry_Type = parryTypeMap[value] or value
-	end,
-})
-
-Section1:Label({
-    Title = 'Detection'
-})
-
-Section1:Toggle({
-	Title = 'DeathSlash Detection',
-	Value = false,
-	Callback = function(value)
-        getgenv().DeathSlashDetection = value
-	end,
-})
-
-Section1:Label({
-    Title = 'Other'
-})
-
-Section1:Toggle({
-	Title = 'Keypress',
-	Value = false,
-	Callback = function(value)
-        getgenv().AutoParryKeypress = value
-	end,
-})
-
-Section2:Toggle({
-	Title = 'Auto Spam Parry',
-	Value = false,
-	Callback = function(value)
-        if value then
-            Connections_Manager['Auto Spam'] = RunService.PreSimulation:Connect(function()
-                local Ball = Auto_Parry.Get_Ball()
-
-                if not Ball then
-                    return
-                end
-
-                local Zoomies = Ball:FindFirstChild('zoomies')
-
-                if not Zoomies then
-                    return
-                end
-
-                Auto_Parry.Closest_Player()
-
-                local Ping = game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue()
-
-                local Ping_Threshold = math.clamp(Ping / 10, 1, 16)
-
-                local Ball_Target = Ball:GetAttribute('target')
-
-                local Ball_Properties = Auto_Parry:Get_Ball_Properties()
-                local Entity_Properties = Auto_Parry:Get_Entity_Properties()
-
-                local Spam_Accuracy = Auto_Parry.Spam_Service({
-                    Ball_Properties = Ball_Properties,
-                    Entity_Properties = Entity_Properties,
-                    Ping = Ping_Threshold
-                })
-
-                local Target_Position = Auto_Parry.Closest_Player().PrimaryPart.Position
-                local Target_Distance = Player:DistanceFromCharacter(Target_Position)
-
-                local Distance = Player:DistanceFromCharacter(Ball.Position)
-
-                if not Ball_Target then
-                    return
-                end
-
-                if Target_Distance > Spam_Accuracy or Distance > Spam_Accuracy then
-                    return
-                end
-
-                local Pulsed = Player.Character:GetAttribute('Pulsed')
-
-                if Pulsed then
-                    return
-                end
-
-                if Ball_Target == tostring(Player) and Target_Distance > 30 and Distance > 30 then
-                    return
-                end
-
-                if Distance <= Spam_Accuracy and Parries > ParryThreshold then
-                    if getgenv().SpamParryKeypress then
-                        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.F, false, game)
-                    else
-                        Auto_Parry.Parry(Selected_Parry_Type)
-                    end
-                end
-            end)
-        else
-            if Connections_Manager['Auto Spam'] then
-                Connections_Manager['Auto Spam']:Disconnect()
-                Connections_Manager['Auto Spam'] = nil
-            end
-        end
-	end,
-})
-
-Section2:Dropdown({
-	Title = 'First Parry Type',
-	List = {
-        'F_Key',
-        'Left_Click',
-        'Navigation'
-    },
-	Value = 'F_Key',
-	Multi = false,
-	Callback = function(value)
-		firstParryType = tostring(value)
-	end,
-})
-
-Section2:Slider({
-	Title = 'Parry Threshold',
-	Min = 1,
-	Max = 3,
-    Round = 1,
-	Value = 1,
-	Callback = function(value)
-		ParryThreshold = value
-	end,
-})
-
-if not isMobile then
-    Section2:Toggle({
-        Title = 'Animation Fix',
-        Value = false,
-        Callback = function(value)
-            if value then
-                Connections_Manager['Animation Fix'] = RunService.PreSimulation:Connect(function()
-                    local Ball = Auto_Parry.Get_Ball()
-                    if not Ball then
-                        return
-                    end
-                    if not Ball:FindFirstChild('zoomies') then
-                        return
-                    end
-
-                    Auto_Parry.Closest_Player()
-
-                    local Ping = game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue()
-
-                    local Ping_Threshold = math.clamp(Ping / 10, 10, 16)
-
-                    local Ball_Target = Ball:GetAttribute('target')
-
-                    local Ball_Properties = Auto_Parry:Get_Ball_Properties()
-                    local Entity_Properties = Auto_Parry:Get_Entity_Properties()
-
-                    local Spam_Accuracy = Auto_Parry.Spam_Service({
-                        Ball_Properties = Ball_Properties,
-                        Entity_Properties = Entity_Properties,
-                        Ping = Ping_Threshold
-                    })
-
-                    local Target_Position = Auto_Parry.Closest_Player().PrimaryPart.Position
-                    local Target_Distance = Player:DistanceFromCharacter(Target_Position)
-                    local Distance = Player:DistanceFromCharacter(Ball.Position)
-
-                    if not Ball_Target then
-                        return
-                    end
-
-                    if Target_Distance > Spam_Accuracy or Distance > Spam_Accuracy then
-                        return
-                    end
-                    
-                    local Pulsed = Player.Character:GetAttribute('Pulsed')
-
-                    if Pulsed then
-                        return
-                    end
-
-                    if Ball_Target == tostring(Player) and Target_Distance > 30 and Distance > 30 then
-                        return
-                    end
-
-                    local threshold = ParryThreshold
-
-                    if Distance <= Spam_Accuracy and Parries > threshold then
-                        if getgenv().SpamParryKeypress then
-                            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.F, false, game) 
-                        else
-                            Auto_Parry.Parry(Selected_Parry_Type)
-                        end
-                    end
-                end)
-            else
-                if Connections_Manager['Animation Fix'] then
-                    Connections_Manager['Animation Fix']:Disconnect()
-                    Connections_Manager['Animation Fix'] = nil
-                end
-            end
-        end,
-    })
-end
-
-Section2:Toggle({
-	Title = 'Keypress',
-	Value = false,
-	Callback = function(value)
-        getgenv().SpamParryKeypress = value
-	end,
-})
-
-Section3:Toggle({
-	Title = 'Manual Spam Parry',
-	Value = false,
-	Callback = function(value)
-        if value then
-            Connections_Manager['Manual Spam'] = RunService.PreSimulation:Connect(function()
-                if getgenv().spamui then
-                    return
-                end
-
-                if getgenv().ManualSpamKeypress then
-                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.F, false, game) 
-                else
-                    Auto_Parry.Parry(Selected_Parry_Type)
-                end
-
-            end)
-        else
-            if Connections_Manager['Manual Spam'] then
-                Connections_Manager['Manual Spam']:Disconnect()
-                Connections_Manager['Manual Spam'] = nil
-            end
-        end
-	end,
-})
-
-if isMobile then
-    Section3:Toggle({
-        Title = 'UI',
-        Value = false,
-        Callback = function(value)
-            getgenv().spamui = value
-            if value then
-                local gui = Instance.new('ScreenGui')
-                gui.Name = 'ManualSpamUI'
-                gui.ResetOnSpawn = false
-                gui.Parent = game.CoreGui
-
-                local frame = Instance.new('Frame')
-                frame.Name = 'MainFrame'
-                frame.Position = UDim2.new(0, 20, 0, 20)
-                frame.Size = UDim2.new(0, 200, 0, 100)
-                frame.BackgroundColor3 = Color3.fromRGB(10, 10, 50)
-                frame.BackgroundTransparency = 0.3
-                frame.BorderSizePixel = 0
-                frame.Active = true
-                frame.Draggable = true
-                frame.Parent = gui
-
-                local uiCorner = Instance.new('UICorner')
-                uiCorner.CornerRadius = UDim.new(0, 12)
-                uiCorner.Parent = frame
-
-                local uiStroke = Instance.new('UIStroke')
-                uiStroke.Thickness = 2
-                uiStroke.Color = Color3.new(0, 0, 0)
-                uiStroke.Parent = frame
-
-                local button = Instance.new('TextButton')
-                button.Name = 'ClashModeButton'
-                button.Text = 'Clash Mode'
-                button.Size = UDim2.new(0, 160, 0, 40)
-                button.Position = UDim2.new(0.5, -80, 0.5, -20)
-                button.BackgroundTransparency = 1
-                button.BorderSizePixel = 0
-                button.Font = Enum.Font.GothamSemibold
-                button.TextColor3 = Color3.new(1, 1, 1)
-                button.TextSize = 22
-                button.Parent = frame
-
-                local activated = false
-
-                local function toggle()
-                    activated = not activated
-                    button.Text = activated and 'Stop' or 'Clash Mode'
-                    if activated then
-                        Connections_Manager['Manual Spam UI'] = game:GetService('RunService').Heartbeat:Connect(function()
-                            Auto_Parry.Parry(Selected_Parry_Type)
-                        end)
-                    else
-                        if Connections_Manager['Manual Spam UI'] then
-                            Connections_Manager['Manual Spam UI']:Disconnect()
-                            Connections_Manager['Manual Spam UI'] = nil
-                        end
-                    end
-                end
-
-                button.MouseButton1Click:Connect(toggle)
-            else
-                if game.CoreGui:FindFirstChild('ManualSpamUI') then
-                    game.CoreGui:FindFirstChild('ManualSpamUI'):Destroy()
-                end
-
-                if Connections_Manager['Manual Spam UI'] then
-                    Connections_Manager['Manual Spam UI']:Disconnect()
-                    Connections_Manager['Manual Spam UI'] = nil
-                end
-            end
-        end,
-    })
-end
-
-Section3:Toggle({
-	Title = 'Keypress',
-	Value = false,
-	Callback = function(value)
-        getgenv().ManualSpamKeypress = value
-	end,
-})
-
-Section4:Slider({
-	Title = 'Parry Accuracy',
-	Min = 1,
-	Max = 100,
-	Value = 100,
-	Callback = function(value)
-		LobbyAP_Speed_Divisor_Multiplier = 0.7 + (value - 1) * (0.35 / 99)
-	end,
-})
-
-Section4:Toggle({
-	Title = 'Random Parry Accuracy',
-	Value = false,
-	Callback = function(value)
-        getgenv().LobbyAPRandomParryAccuracyEnabled = value
-	end,
-})
-
-Section4:Toggle({
-	Title = 'Keypress',
-	Value = false,
-	Callback = function(value)
-        getgenv().LobbyAPKeypress = value
-	end,
-})
-
-local Section5 = Tab_1:Section({Title = 'Player', Side = 'Left'})
-local Section6 = Tab_1:Section({Title = 'Misc', Side = 'Right'})
-
-Section5:Slider({
-	Title = 'Walk Speed',
-	Min = 1,
-	Max = 300,
-	Value = 10,
-	Callback = function(s)
-		Player.Character.Humanoid.WalkSpeed = s
-	end,
-})
-
-Section5:Slider({
-	Title = 'Jump Power',
-	Min = 1,
-	Max = 100,
-	Value = 30,
-	Callback = function(s)
-		Player.Character.Humanoid.JumpPower = s
-	end,
-})
-
-PlayerList = {}
-
-for i, v in pairs(Players:GetChildren()) do
-    table.insert(PlayerList, v.Name)
-end
-
-Section6:Dropdown({
-	Title = 'Select Player',
-	List = PlayerList,
-	Value = '',
-	Multi = false,
-	Callback = function(value)
-		getgenv().SelectPlayer = value
-	end,
-})
-
-Section6:Button({
-    Title = 'Refrash Player List',
-    Callback = function()
-        table.clear(PlayerList, v.Name)
-        table.insert(PlayerList, v.Name)
-    end,
-})
-
-Section6:Button({
-    Title = 'Teleport Player',
-    Callback = function()
-        Player.Character.HumanoidRootPart.CFrame = Players[getgenv().SelectPlayer].Character.HumanoidRootPart.CFrame
-    end,
-})
-
-
-
-ReplicatedStorage.Remotes.ParrySuccessAll.OnClientEvent:Connect(function(_, root)
-    if root.Parent and root.Parent ~= Player.Character then
-        if root.Parent.Parent ~= Workspace.Alive then
+        Submit.MouseButton1Click:Connect(function()
+        local inputKey = KeyInput.Text
+        if inputKey == "" then
             return
         end
-    end
 
-    Auto_Parry.Closest_Player()
-
-    local Ball = Auto_Parry.Get_Ball()
-
-    if not Ball then
-        return
-    end
-    if not Auto_Parry.Closest_Player() then
-        return
-    end
-
-    local Target_Distance = (Player.Character.HumanoidRootPart.Position - Auto_Parry.Closest_Player().PrimaryPart.Position).Magnitude
-    local Distance = (Player.Character.HumanoidRootPart.Position - Ball.Position).Magnitude
-    local Direction = (Player.Character.HumanoidRootPart.Position - Ball.Position).Unit
-    local Dot = Direction:Dot(Ball.AssemblyLinearVelocity.Unit)
-
-    local Curve_Detected = Auto_Parry.Is_Curved()
-    if Target_Distance < 15 and Distance < 15 and Dot > -0.25 then
-        if Curve_Detected then
-            Auto_Parry.Parry(Selected_Parry_Type)
+        if verifyKey(inputKey) then
+            KeySystem.SaveKey(inputKey)
+            keyAuthenticated = true
+            wait(1)
+            ScreenGui:Destroy()
+            wait(2)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/RIPPER-Hub-Next-Generation/refs/heads/main/BladeBall%20Free-obfuscated.lua"))
         end
-    end
+    end)
 
-    if not Grab_Parry then
-        return
-    end
+    local startTime = tick()
+    local timeout = 300
+    repeat wait(0.1) until keyAuthenticated or (tick() - startTime > timeout)
 
-    Grab_Parry:Stop()
-end)
-
-ReplicatedStorage.Remotes.ParrySuccess.OnClientEvent:Connect(function()
-    if Player.Character.Parent ~= Workspace.Alive then
-        return
-    end
-
-    if not Grab_Parry then
-        return
-    end
-
-    Grab_Parry:Stop()
-end)
-
-Workspace.Balls.ChildAdded:Connect(function()
-    Parried = false
-end)
-
-Workspace.Balls.ChildRemoved:Connect(function(Value)
-    Parries = 0
-    Parried = false
-
-    if Connections_Manager['Target Change'] then
-        Connections_Manager['Target Change']:Disconnect()
-        Connections_Manager['Target Change'] = nil
-    end
-end)
-
-ReplicatedStorage.Remotes.Phantom.OnClientEvent:Connect(function(a, b)
-    if b.Name == Player.Name then
-        Phantom = true
+    if keyAuthenticated then
+        return true
     else
-        Phantom = false
+        if ScreenGui and ScreenGui.Parent then
+            ScreenGui:Destroy()
+        end
+        return false
     end
-end)
+end
 
-Workspace.Balls.ChildAdded:Connect(function()
-    Parried = false
-end)
+local keyValid = KeySystem.CreateKeyUI()
+if not keyValid then
+    warn("Key is invalid or timed out. Script stopped.")
+    return
+end
 
-Workspace.Balls.ChildRemoved:Connect(function(Value)
-    Parries = 0
-    Parried = false
+-------------------------------------- FUNCTION SCRIPT --------------------------------------
 
-    if Connections_Manager['Target Change'] then
-        Connections_Manager['Target Change']:Disconnect()
-        Connections_Manager['Target Change'] = nil
-    end
-end)
+            -- game.StarterGui:SetCore("SendNotification", {
+            --     Title = "Ripper Hub Bot",
+            --     Text = "Checking Key...",
+            --     Duration = 2,
+            --     Icon = "rbxassetid://122504813117904"
+            -- })
+            -- wait(3)
+            -- game.StarterGui:SetCore("SendNotification", {
+            --     Title = "Ripper Hub Bot",
+            --     Text = "Key Valid & Saved",
+            --     Duration = 3,
+            --     Icon = "rbxassetid://122504813117904"
+            -- })
+            -- wait(3)
+            -- game.StarterGui:SetCore("SendNotification", {
+            --     Title = "Ripper Hub Bot",
+            --     Text = "Checking Game...",
+            --     Duration = 3,
+            --     Icon = "rbxassetid://122504813117904"
+            -- })
+            -- wait(3)
+            -- game.StarterGui:SetCore("SendNotification", {
+            --     Title = "Ripper Hub Bot",
+            --     Text = "Loading...",
+            --     Duration = 3,
+            --     Icon = "rbxassetid://122504813117904"
+            -- })
+            -- wait(2)
