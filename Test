@@ -1291,8 +1291,8 @@ Section4:Toggle({
 	end,
 })
 
-local Section5 = Tab:Section({Title = 'Player', Side = 'Left'})
-local Section6 = Tab:Section({Title = 'Misc', Side = 'Right'})
+local Section5 = Tab_1:Section({Title = 'Player', Side = 'Left'})
+local Section6 = Tab_1:Section({Title = 'Misc', Side = 'Right'})
 
 Section5:Slider({
 	Title = 'Walk Speed',
