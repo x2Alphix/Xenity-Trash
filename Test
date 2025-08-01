@@ -502,7 +502,7 @@ KeySystem.CreateKeyUI = function()
             wait(1)
             ScreenGui:Destroy()
             wait(2)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/RIPPER-Hub-Next-Generation/refs/heads/main/BladeBall%20Free-obfuscated.lua"))
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/RIPPER-Hub-Next-Generation/refs/heads/main/BladeBall%20Free-obfuscated.lua"))()
         end
     end)
 
