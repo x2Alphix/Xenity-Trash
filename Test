@@ -3,7 +3,7 @@ local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/wowse
 local Window = library:Window({
     Logo = 122504813117904,
     Keybind = Enum.KeyCode.LeftControl,
-    Size = Size = UDim2.new(0, 600,1.0, 0)
+    Size = UDim2.new(0, 600,1.0, 0)
 })
 local Tab = Window:Tab({Title = 'Main'})
 local Tab_1 = Window:Tab({Title = 'Local Player'})
