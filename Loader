@@ -1,0 +1,17 @@
+if game.PlaceId == 2753915549 or == 4442272183 or 7449423635 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blox%20Fruits%20Premium"))()
+elseif game.PlaceId == 126244816328678 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Dig%20Premium"))()
+elseif game.PlaceId == 13772394625 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blade%20Ball%20Premium"))()
+elseif game.PlaceId == 72829404259339 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Anime%20Rangers%20X%20Premium"))()
+elseif game.PlaceId == 126884695634066 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Grow%20A%20Garden%20Premium"))()
+elseif game.PlaceId == 13379208636 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Attack%20On%20Titan%20Revolution%20Premium"))()
+elseif game.PlaceId == 129827112113663 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Prospection%20Premium"))()
+else
+     game:GetService("Players").LocalPlayer:Kick("Map not Supported")
+end
