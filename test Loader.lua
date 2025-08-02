@@ -60,7 +60,7 @@ local funcs = {
             icon.ImageRectSize = icons[i]["RectSize"]
 
             for i2 = 1, #strings[i] do
-                text.Text = string.sub(strings[i], 0, i2])
+                text.Text = string.sub(strings[i], 0, i2)
                 wait(0.5)
             end
             for i2 = 1, #strings[i] do
