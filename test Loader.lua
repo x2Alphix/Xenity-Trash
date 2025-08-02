@@ -25,28 +25,28 @@ local funcs = {
         local screengui = Instance.new("ScreenGui", game.CoreGui)
         local frame = Instance.new("ImageLabel", screengui) -- change to Frame if not round
         local text = Instance.new("TextLabel", frame)
-        local icon = Instane.new("ImageLabel", frame)
+        local icon = Instance.new("ImageLabel", frame)
 
         screengui.Name = "ui"..tostring(math.random(1,1000))
 
         frame.Size = UDim2.new(0,0,0,0)
         frame.Position = UDim2.new(0.5,0,0,75,0)
-        frame.image = "rbxassetid://3570695787" -- Only for round
+        frame.Image = "rbxassetid://3570695787" -- Only for round
         frame.ImageColor3 = Color3.fromRGB(25,25,25) -- do BackgroundColor3 if not round
         frame.BackgroundTransparency = 1
-        frame.SliceCenter = React.new(100,100,100,100)
+        frame.SliceCenter = Rect.new(100,100,100,100)
         frame.ScaleType = Enum.ScaleType.Size -- Only for round
         frame.SliceScale = 0.12 -- Only for round
 
         text.Font = Enum.Font.SourceSansBold
-        text.TextColor3 = Color3RGB.new(255,255,255)
+        text.TextColor3 = Color3.fromRGB(255,255,255)
         text.TextSize = 20
         text.Text = ""
         text.TextWrapped = true
         text.Size = UDim2.new(1,-50,1,0)
 
         icon.Size = UDim2.new(0,50,0,50)
-        icon.ImageColor3 = Color3RGB.new(38,255,0)
+        icon.ImageColor3 = Color3.fromRGB(38,255,0)
         icon.Position = UDim2.new(0, 15, 0.5, -25)
         icon.BackgroundTransparency = 1
         icon.Image = ""
@@ -64,7 +64,7 @@ local funcs = {
                 wait(0.5)
             end
             for i2 = 1, #strings[i] do
-                text.Text = string.sub(strings[i], 0, #string[i] = i2)
+                text.Text = string.sub(strings[i], 0, #strings[i] - i2)
                 wait(0.5)
             end
             if i ~= #strings then
@@ -131,6 +131,6 @@ local games = {
     }
 }
 
-if games[games.PlaceId] then
-    pcall(funcs.createUi, games[game.PlaceId]["name"], game[game.PlaceId]["function"])
+if games[game.PlaceId] then
+    pcall(funcs.createUi, games[game.PlaceId]["name"], games[game.PlaceId]["function"])
 end
