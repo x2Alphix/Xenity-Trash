@@ -1,17 +1,49 @@
-if game.PlaceId == 2753915549 or == 4442272183 or 7449423635 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blox%20Fruits%20Premium"))()
+if game.PlaceId == 2753915549 then 
+    BF1 = true 
+elseif game.PlaceId == 4442272183 then 
+    BF2 = true 
+elseif game.PlaceId == 7449423635 then 
+    BF3 = true
 elseif game.PlaceId == 126244816328678 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Dig%20Premium"))()
+    Dig = true
 elseif game.PlaceId == 13772394625 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blade%20Ball%20Premium"))()
+    BB = true
 elseif game.PlaceId == 72829404259339 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Anime%20Rangers%20X%20Premium"))()
+    ARS = true
 elseif game.PlaceId == 126884695634066 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Grow%20A%20Garden%20Premium"))()
+    GAG = true
 elseif game.PlaceId == 13379208636 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Attack%20On%20Titan%20Revolution%20Premium"))()
+    AOTR = true
 elseif game.PlaceId == 129827112113663 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Prospection%20Premium"))()
+    PPN = true
 else
-     game:GetService("Players").LocalPlayer:Kick("Map not Supported")
+    game:GetService("Players").LocalPlayer:Kick("Map not Supported")
+end
+
+if BF1 or BF2 or BF3 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blox%20Fruits%20Premium"))()
+end
+
+if Dig then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Dig%20Premium"))()
+end
+
+if BB then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Blade%20Ball%20Premium"))()
+end
+
+if ARS then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Anime%20Rangers%20X%20Premium"))()
+end
+
+if GAG then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Grow%20A%20Garden%20Premium"))()
+end
+
+if AOTR then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Attack%20On%20Titan%20Revolution%20Premium"))()
+end
+
+if PPN then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/x2Alphix/Ripper-Trash/refs/heads/main/Prospection%20Premium"))()
 end
